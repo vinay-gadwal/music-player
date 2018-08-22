@@ -4,7 +4,7 @@ import Sound from 'react-native-sound';
 
 export default class MyComponent extends Component {
   playSound() {
-    const mySound = new Sound('tap.wav', Sound.MAIN_BUNDLE, (e) => {
+    const mySound = new Sound('tap.wav', "http://russprince.com/hobbies/files/13%20Beethoven%20-%20Fur%20Elise.mp3", (e) => {
       if (e) {
         console.log('error', e);
       } else {

@@ -77,9 +77,26 @@ export default class Player extends Component {
     }
   }
 
-  video(){
-        return(
-    <Video source={{uri: "http://russprince.com/hobbies/files/13%20Beethoven%20-%20Fur%20Elise.mp3"}} // Can be a URL or a local file.
+  // video(){
+  //       return(
+  //   <Video source={{uri: "http://russprince.com/hobbies/files/13%20Beethoven%20-%20Fur%20Elise.mp3"}} // Can be a URL or a local file.
+  //       ref="audioElement"
+  //       paused={this.state.paused}               // Pauses playback entirely.
+  //       resizeMode="cover"           // Fill the whole screen at aspect ratio.
+  //       repeat={true}                // Repeat forever.
+  //       onLoadStart={this.loadStart} // Callback when video starts to load
+  //       onLoad={this.setDuration.bind(this)}    // Callback when video loads
+  //       onProgress={this.setTime.bind(this)}    // Callback every ~250ms with currentTime
+  //       onEnd={this.onEnd}           // Callback when playback finishes
+  //       onError={this.videoError}    // Callback when video cannot be loaded
+  //       style={styles.audioElement} />
+  //   )
+  // }
+
+  render() {
+    const track = this.props.tracks[this.state.selectedTrack];
+    const video = this.state.isChanging ? null : (
+      <Video source={{uri: track.audioUrl}} // Can be a URL or a local file.
         ref="audioElement"
         paused={this.state.paused}               // Pauses playback entirely.
         resizeMode="cover"           // Fill the whole screen at aspect ratio.
@@ -90,24 +107,7 @@ export default class Player extends Component {
         onEnd={this.onEnd}           // Callback when playback finishes
         onError={this.videoError}    // Callback when video cannot be loaded
         style={styles.audioElement} />
-    )
-  }
-
-  render() {
-    const track = this.props.tracks[this.state.selectedTrack];
-    // const video = this.state.isChanging ? null : (
-    //   <Video source={{uri: track.audioUrl}} // Can be a URL or a local file.
-    //     ref="audioElement"
-    //     paused={this.state.paused}               // Pauses playback entirely.
-    //     resizeMode="cover"           // Fill the whole screen at aspect ratio.
-    //     repeat={true}                // Repeat forever.
-    //     onLoadStart={this.loadStart} // Callback when video starts to load
-    //     onLoad={this.setDuration.bind(this)}    // Callback when video loads
-    //     onProgress={this.setTime.bind(this)}    // Callback every ~250ms with currentTime
-    //     onEnd={this.onEnd}           // Callback when playback finishes
-    //     onError={this.videoError}    // Callback when video cannot be loaded
-    //     style={styles.audioElement} />
-    // );
+    );
 
     return (
       <View style={styles.container}>
@@ -130,7 +130,8 @@ export default class Player extends Component {
           onPressPause={() => this.setState({paused: true})}
           onBack={this.onBack.bind(this)}
           onForward={this.onForward.bind(this)}
-          paused={this.state.paused}>{this.video()}</Controls>
+          paused={this.state.paused}/>
+          {this.video}
       </View>
     );
   }
@@ -139,7 +140,7 @@ export default class Player extends Component {
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: 'grey',
   },
   audioElement: {
     height: 0,
